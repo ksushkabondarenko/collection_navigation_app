@@ -53,9 +53,6 @@ class LoginPage extends StatelessWidget {
                 new SizedBox(height: 20.0),
                 ElevatedButton(onPressed: () {
                   if(_formKey.currentState!.validate()) {
-                    Color color = Colors.red;
-                    String text;
-                    text = 'Форма успешно заполнена'; color = Colors.green;
                     Navigator.pushNamed(context, '/second');
                   }
                 }, child: const Text('Проверить',

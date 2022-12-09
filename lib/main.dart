@@ -17,7 +17,3 @@ void main() {
       }
   ));
 }
-
-
-
-git remote -v
