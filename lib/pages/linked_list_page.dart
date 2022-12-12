@@ -3,7 +3,7 @@ import 'package:collection_app/src/linked_list.dart';
 
 
 class LinkedListPage extends StatefulWidget {
-  LinkedListPage({super.key, required this.title});
+  const LinkedListPage({super.key, required this.title});
   final String title;
 
   @override
@@ -16,12 +16,54 @@ class _LinkedListPageState extends State<LinkedListPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   dynamic data;
 
+  Future<void> _editData(index) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Редактируйте данные:'),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              initialValue: list.elementAt(index),
+              decoration: const InputDecoration(
+                hintText: "Change data",
+                labelText: "Data",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Пожалуйста введите данные';
+                } else {
+                  data = value;
+                }
+                return null;
+              },
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                if(_formKey.currentState!.validate()) {
+                  setState(() {
+                    list.changeAt(index, data);
+                  });
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _addNewData() {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Введите данные:'),
+          title: const Text('Введите данные:'),
           content: Form(
             key: _formKey,
             child: TextFormField(
@@ -34,13 +76,14 @@ class _LinkedListPageState extends State<LinkedListPage> {
                   return 'Пожалуйста введите данные';
                 } else {
                   data = value;
-                };
+                }
+                return null;
                 },
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
-              child: Text('Ok'),
+              child: const Text('Ok'),
               onPressed: () {
                 if(_formKey.currentState!.validate()) {
                   setState(() {
@@ -62,9 +105,25 @@ class _LinkedListPageState extends State<LinkedListPage> {
           padding: const EdgeInsets.all(8),
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text('${list[index]}', style: TextStyle(fontSize: 26))
+            final item  = list[index];
+            return Dismissible(key: Key(list[index]),
+                child: Card(
+                    child: ListTile(
+                      title: Text('$item', style: const TextStyle(fontSize: 26)),
+                      trailing: IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                        ), onPressed: () => setState(() {
+                          _editData(index);
+                        }),
+                      ),
+                    ),
+                ),
+                onDismissed: (durection) {
+              setState(() {
+                list.removeAt(index);
+              });
+            },
             );
           },
       ),
