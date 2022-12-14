@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30.0),
                 const Text('Почта пользователя:', style: TextStyle(fontSize: 20.0),),
                 TextFormField(
+                  key: const Key('emailTextField'),
                   decoration: const InputDecoration(
                     hintText: "Enter email",
                     labelText: "Email",
@@ -41,6 +42,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30.0),
                 const Text('Пароль:', style: TextStyle(fontSize: 20.0),),
                 TextFormField(
+                  key: const ValueKey('passwordTextField'),
                   obscureText: true,
                   decoration: const InputDecoration(
                     hintText: "Enter password",
