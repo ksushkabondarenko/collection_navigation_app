@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:collection_app/src/linked_list.dart';
-
+import 'package:collection_app/collection_app.dart';
 
 class LinkedListPage extends StatefulWidget {
   const LinkedListPage({super.key, required this.title});
@@ -11,7 +10,6 @@ class LinkedListPage extends StatefulWidget {
 }
 
 class _LinkedListPageState extends State<LinkedListPage> {
-
   final LinkedList list = LinkedList();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   dynamic data;
@@ -44,7 +42,7 @@ class _LinkedListPageState extends State<LinkedListPage> {
             ElevatedButton(
               child: const Text('Ok'),
               onPressed: () {
-                if(_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   setState(() {
                     list.changeAt(index, data);
                   });
@@ -78,14 +76,14 @@ class _LinkedListPageState extends State<LinkedListPage> {
                   data = value;
                 }
                 return null;
-                },
+              },
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
               child: const Text('Ok'),
               onPressed: () {
-                if(_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   setState(() {
                     list.addLast(data);
                   });
@@ -98,46 +96,48 @@ class _LinkedListPageState extends State<LinkedListPage> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            final item  = list[index];
-            return Dismissible(key: Key(list[index]),
-                child: Card(
-                    child: ListTile(
-                      title: Text('$item', style: const TextStyle(fontSize: 26)),
-                      trailing: IconButton(
-                        icon: const Icon(
-                          Icons.edit,
-                        ), onPressed: () => setState(() {
-                          _editData(index);
-                        }),
-                      ),
-                    ),
+        padding: const EdgeInsets.all(8),
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = list[index];
+          return Dismissible(
+            key: Key(list[index]),
+            child: Card(
+              child: ListTile(
+                title: Text('$item', style: const TextStyle(fontSize: 26)),
+                trailing: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                  ),
+                  onPressed: () => setState(() {
+                    _editData(index);
+                  }),
                 ),
-                onDismissed: (durection) {
+              ),
+            ),
+            onDismissed: (durection) {
               setState(() {
                 list.removeAt(index);
               });
             },
-            );
-          },
+          );
+        },
       ),
       appBar: AppBar(
         title: Text(widget.title),
-    ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addNewData();
-          },
+        },
         tooltip: 'AddNewData',
         child: const Icon(Icons.add),
       ),
     );
   }
-
 }

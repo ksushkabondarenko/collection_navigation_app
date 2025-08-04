@@ -2,7 +2,6 @@ import 'package:collections/pages/linked_list_page.dart';
 import 'package:collections/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -12,8 +11,9 @@ void main() {
       ),
       initialRoute: '/',
       routes: {
-        '/':(BuildContext context) => const LoginPage(title: 'Collections App',),
-        '/second':(BuildContext context) => LinkedListPage(title: 'List')
-      }
-  ));
+        '/': (BuildContext context) => const LoginPage(
+              title: 'Collections App',
+            ),
+        '/second': (BuildContext context) => const LinkedListPage(title: 'List')
+      }));
 }

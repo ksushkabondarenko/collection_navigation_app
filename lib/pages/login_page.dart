@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key, required this.title});
 
@@ -8,7 +7,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -18,13 +17,15 @@ class LoginPage extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formKey,
-            child:
-            Column(
+            key: formKey,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 30.0),
-                const Text('Почта пользователя:', style: TextStyle(fontSize: 20.0),),
+                const Text(
+                  'Почта пользователя:',
+                  style: TextStyle(fontSize: 20.0),
+                ),
                 TextFormField(
                   key: const Key('emailTextField'),
                   decoration: const InputDecoration(
@@ -33,14 +34,18 @@ class LoginPage extends StatelessWidget {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) return 'Пожалуйста введите свой Email';
-                    String p = "[a-zA-Z0-9+.\_\%-+]{1,256}@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
-                    RegExp regExp = new RegExp(p);
+                    String p =
+                        "[a-zA-Z0-9+._%-+]{1,256}@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
+                    RegExp regExp = RegExp(p);
                     if (regExp.hasMatch(value)) return null;
                     return 'Это не E-mail';
                   },
                 ),
                 const SizedBox(height: 30.0),
-                const Text('Пароль:', style: TextStyle(fontSize: 20.0),),
+                const Text(
+                  'Пароль:',
+                  style: TextStyle(fontSize: 20.0),
+                ),
                 TextFormField(
                   key: const ValueKey('passwordTextField'),
                   obscureText: true,
@@ -50,18 +55,22 @@ class LoginPage extends StatelessWidget {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) return 'Пожалуйста введите ваш пароль';
+                    return null;
                   },
                 ),
-                new SizedBox(height: 20.0),
-                ElevatedButton(onPressed: () {
-                  if(_formKey.currentState!.validate()) {
-                    Navigator.pushNamed(context, '/second');
-                  }
-                }, child: const Text('Проверить',
-                  style: TextStyle(
-                    fontSize: 18,
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, '/second');
+                    }
+                  },
+                  child: const Text(
+                    'Проверить',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
-                ),
                 ),
               ],
             ),
@@ -69,7 +78,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
-
