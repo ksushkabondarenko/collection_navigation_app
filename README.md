@@ -1,6 +1,6 @@
-# collections
+# collection_navigation_app
 
-A new Flutter project.
+Note app with login page
 
 ## Getting Started
 
